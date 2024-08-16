@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+            overflow: hidden;
+            max-width: 100%;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .card {
+            display: none;
+            padding: 20px;
+            margin: 0 auto 20px;
+            background-color: #fff;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: absolute;
+            left: 0;
+            right: 0;
+            max-width: 600px;
+            width: 90%;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .card.active {
+            display: block;
+            transform: translateX(0);
+        }
+
+        .card.animate-out {
+            transform: translateX(-100%);
+        }
+
+        .card.animate-in {
+            display: block;
+            transform: translateX(100%);
+        }
+
+        button {
+            display: block;
+            margin: 10px auto;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007BFF; /* Blue button */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #result {
+            text-align: center;
+            font-size: 18px;
+            margin-top: 20px;
+            line-height: 1.5;
+            color: #fff; /* White text */
+        }
+
+        /* Styling for the result card */
+        #card-result {
+            padding: 30px;
+            background-color: #007BFF; /* Blue background, same as buttons */
+            color: white;
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Stronger shadow for emphasis */
+        }
+
+        #card-result p {
+            font-size: 22px; /* Larger font size for the result */
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        #card-result button {
+            background-color: #fff; /* White button */
+            color: #007BFF; /* Blue text */
+            font-size: 18px; /* Larger font size for the restart button */
+            padding: 12px 24px;
+            border: 2px solid #007BFF; /* Blue border */
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #card-result button:hover {
+            background-color: #f0f0f0; /* Light gray on hover */
+        }
+
+        /* Responsive Styles */
+        @media screen and (max-width: 768px) {
+            .card {
+                width: 95%;
+                padding: 15px;
+            }
+
+            button {
+                width: 90%;
+                padding: 10px;
+                font-size: 14px;
+            }
+
+            #card-result {
+                padding: 20px;
+            }
+
+            #card-result p {
+                font-size: 20px;
+            }
+
+            #card-result button {
+                font-size: 16px;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .card {
+                width: 100%;
+                padding: 10px;
+            }
+
+            button {
+                width: 100%;
+                padding: 8px;
+                font-size: 12px;
+            }
+
+            #card-result {
+                padding: 15px;
+            }
+
+            #card-result p {
+                font-size: 18px;
+            }
+
+            #card-result button {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+
+
+<body>
+
+<h1>What's your golf brand?</h1>
+
+<div class="card active" id="card-1">
+    <p>1. The sun is just beginning to rise, casting a golden hue across the dew-covered fairways. The morning air is crisp, and you can feel the excitement building as you step onto the first tee box. The group you're playing with is full of energy, laughing and sharing stories. What do you do?</p>
+    <button onclick="recordAnswer('E', 1, this)">You eagerly join in, sharing your own stories and jokes, feeding off the group's energy. For you, golf is as much about the camaraderie as it is about the game.</button>
+    <button onclick="recordAnswer('I', 1, this)">You smile politely, but your mind is already on your first shot. The quiet focus and anticipation of the game ahead are what draw you to golf, and you’re ready to get started.</button>
+</div>
+
+<div class="card" id="card-2">
+    <p>2. As you take your stance on the first tee, you feel the soft breeze gently rustling the leaves of the nearby trees. The fairway stretches out before you, a perfect canvas for your opening drive. How do you prepare for this important first shot?</p>
+    <button onclick="recordAnswer('S', 2, this)">You focus on the mechanics of your swing, running through the checklist in your mind—grip, stance, alignment. You've practiced this a thousand times, and you rely on your technique to deliver a solid shot.</button>
+    <button onclick="recordAnswer('N', 2, this)">You close your eyes for a moment and visualize the ball’s flight—soaring high, landing softly in the middle of the fairway. Trusting your instincts, you let your body take over, feeling the rhythm of the game in your swing.</button>
+</div>
+
+<div class="card" id="card-3">
+    <p>3. After a decent drive, you find yourself about 150 yards from the green, with a gentle breeze at your back. You reach for your bag to select your club. The sun glints off the clubs, and you feel the weight of each one in your hands. What guides your choice?</p>
+    <button onclick="recordAnswer('T', 3, this)">You carefully calculate the distance, considering the wind and any obstacles between you and the green. You choose the club that you know will give you the best chance to reach your target.</button>
+    <button onclick="recordAnswer('F', 3, this)">You feel the weight of a few clubs and settle on the one that just feels right. You trust that your experience and intuition will guide you to make the right shot.</button>
+</div>
+
+<div class="card" id="card-4">
+    <p>4. You reach the second hole, a long par 5 that doglegs to the right. The fairway is lined with tall pines, and a shimmering pond guards the green. The challenge excites you, and you begin to strategize your approach. How do you plan your shots?</p>
+    <button onclick="recordAnswer('J', 4, this)">You break down the hole into manageable segments, deciding on specific targets for each shot. You’re methodical, sticking to your tried-and-true strategy.</button>
+    <button onclick="recordAnswer('P', 4, this)">You decide to see how your first shot plays out and adjust your strategy as you go. You enjoy the flexibility and spontaneity of reacting to the situation as it unfolds.</button>
+</div>
+
+<div class="card" id="card-5">
+    <p>5. The course is beginning to fill up as more players arrive. You find yourself on the third tee, and you notice a group of onlookers near the clubhouse, watching your swing. You’re playing in a charity tournament today, and the atmosphere is festive yet competitive. How do you feel about the attention?</p>
+    <button onclick="recordAnswer('E', 5, this)">You thrive on it. The buzz of competition and the chance to showcase your skills in front of others fuels your excitement. You love the energy that comes from playing in a tournament setting.</button>
+    <button onclick="recordAnswer('I', 5, this)">You stay calm and focused, almost tuning out the crowd. For you, this tournament is more about personal achievement than impressing others, and you’re here to test your own limits.</button>
+</div>
+
+<div class="card" id="card-6">
+    <p>6. As you walk up the fairway on the fourth hole, the sky darkens, and the wind begins to pick up. A light drizzle starts to fall, making the conditions more challenging. The once tranquil course is now a test of adaptability. How do you handle this unexpected change?</p>
+    <button onclick="recordAnswer('S', 6, this)">You quickly adjust your stance and grip, choosing the right club for the now-wet conditions. You’re confident in your ability to adapt to whatever the course throws at you.</button>
+    <button onclick="recordAnswer('N', 6, this)">You pause for a moment, feeling the change in the air. You visualize new strategies, adjusting your game plan to flow with the elements, trusting that your instincts will guide you through the storm.</button>
+</div>
+
+<div class="card" id="card-7">
+    <p>7. After navigating the elements, you reach the green. The rain has softened the putting surface, and you face a tricky downhill putt. As you line up the putt, you reflect on how the round has gone so far. How do you evaluate your performance?</p>
+    <button onclick="recordAnswer('T', 7, this)">You mentally replay your shots, analyzing what went well and what could be improved. Each round is a chance to refine your game, and you’re always thinking about how to get better.</button>
+    <button onclick="recordAnswer('F', 7, this)">You smile, thinking about the moments of joy during the round—the perfect drive, the scenic views, the camaraderie. You measure your success by how much you’ve enjoyed the experience.</button>
+</div>
+
+<div class="card" id="card-8">
+    <p>8. At the turn, you take a short break at the clubhouse. The smell of fresh coffee and breakfast sandwiches fills the air, and you take a moment to organize your gear. Your golf bag, a trusted companion, is filled with everything you need for the day. How do you keep it in order?</p>
+    <button onclick="recordAnswer('J', 8, this)">You meticulously check that everything is in its place—clubs, tees, balls—making sure you’re prepared for any scenario that might arise on the back nine.</button>
+    <button onclick="recordAnswer('P', 8, this)">You grab what you need and don’t worry too much about the rest. You like to keep things simple and let the day unfold naturally.</button>
+</div>
+
+<div class="card" id="card-9">
+    <p>9. The tenth hole is a tight par 4, with thick woods on either side of the fairway. Your playing partners discuss various strategies—laying up short or going for the green. The pressure mounts as you stand on the tee. How do you approach this tricky hole?</p>
+    <button onclick="recordAnswer('E', 9, this)">You engage with your partners, weighing the pros and cons of each strategy. You enjoy collaborating and gathering different perspectives before making your decision.</button>
+    <button onclick="recordAnswer('I', 9, this)">You stay focused on your own plan, blocking out the chatter. You’ve already decided on your approach, and you’re confident in sticking to it.</button>
+</div>
+
+<div class="card" id="card-10">
+    <p>10. You find yourself on the eleventh tee of a course you’ve never played before. The fairway is flanked by bunkers, and the green is perched on a hill, offering a stunning view of the surrounding landscape. How do you approach this new and unfamiliar challenge?</p>
+    <button onclick="recordAnswer('S', 10, this)">You pull out the course map, carefully studying the yardages and hazards. You make sure you’re fully informed before deciding on your shot.</button>
+    <button onclick="recordAnswer('N', 10, this)">You take in the view and let your imagination run wild, excited by the challenge. You embrace the unknown, ready to try something new and creative.</button>
+</div>
+
+<div class="card" id="card-11">
+    <p>11. You’ve reached the twelfth green, a notorious spot on the course known for its tricky breaks. The wind has picked up again, making the putt even more challenging. The crowd has gathered to watch. As you stand over the ball, how do you handle the pressure?</p>
+    <button onclick="recordAnswer('T', 11, this)">You block out all distractions and focus on the mechanics of your putt. You trust in your routine and your ability to execute under pressure.</button>
+    <button onclick="recordAnswer('F', 11, this)">You take a deep breath and center yourself, focusing on staying calm. For you, keeping a positive mindset is the key to making this crucial putt.</button>
+</div>
+
+<div class="card" id="card-12">
+    <p>12. The back nine takes you deep into the heart of the course, where the fairways are lined with towering oaks and the only sounds are the rustle of leaves and the occasional call of a bird. As you walk between holes, you reflect on why you love this game. What stands out to you?</p>
+    <button onclick="recordAnswer('E', 12, this)">The friendships you’ve made, the laughter, and the shared experiences on the course. Golf, for you, is a social experience as much as it is a sport.</button>
+    <button onclick="recordAnswer('I', 12, this)">The peace and quiet, the chance to be alone with your thoughts, and the opportunity for personal reflection. Golf is your escape, a place where you can find tranquility.</button>
+</div>
+
+<div class="card" id="card-13">
+    <p>13. The sixteenth hole is a short par 3, with an elevated green surrounded by bunkers. You decide to spend some extra time practicing here, working on your approach shots. How do you structure your practice?</p>
+    <button onclick="recordAnswer('J', 13, this)">You set up a series of drills, focusing on specific areas you want to improve. Practice is a serious matter for you, and you like to have clear goals.</button>
+    <button onclick="recordAnswer('P', 13, this)">You let your intuition guide you, practicing whatever feels right in the moment. For you, practice is about exploration and finding your rhythm.</button>
+</div>
+
+<div class="card" id="card-14">
+    <p>14. On the seventeenth hole, a sharp dogleg to the left, you hit a poor shot that lands you in the deep rough. The frustration of the mistake lingers as you approach your ball. How do you recover mentally and prepare for your next shot?</p>
+    <button onclick="recordAnswer('S', 14, this)">You take a deep breath and analyze what went wrong. You quickly adjust your technique and focus on executing a better shot next time.</button>
+    <button onclick="recordAnswer('N', 14, this)">You step back, considering the bigger picture. You focus on staying positive and understanding the situation from all angles before making your next move.</button>
+</div>
+
+<div class="card" id="card-15">
+    <p>15. As you walk up to the final tee, you reflect on the rules of the game. Golf has a rich history of tradition and etiquette. What is your attitude towards the rules?</p>
+    <button onclick="recordAnswer('J', 15, this)">You believe in following the rules to the letter, respecting the game’s long-standing traditions and ensuring fair play.</button>
+    <button onclick="recordAnswer('P', 15, this)">You see the rules as flexible guidelines, adjusting them when needed to keep the game enjoyable and fair for everyone.</button>
+</div>
+
+<div class="card" id="card-16">
+    <p>16. The final fairway stretches out before you, long and straight, with a few scattered bunkers and a distant green. It’s your last chance to make a statement in this round. How do you decide on your strategy for this crucial shot?</p>
+    <button onclick="recordAnswer('T', 16, this)">You carefully evaluate the conditions—distance, wind, obstacles—and choose the most logical and effective approach. Every detail matters.</button>
+    <button onclick="recordAnswer('F', 16, this)">You trust your instincts, going with the club that feels right. For you, golf is as much about feel as it is about logic.</button>
+</div>
+
+<div class="card" id="card-17">
+    <p>17. The eighteenth hole ends near the clubhouse, where you can already hear the lively chatter of fellow golfers recounting their rounds. As you step up to your final putt, you reflect on your round. What’s your focus as you close out the day?</p>
+    <button onclick="recordAnswer('J', 17, this)">You’re determined to finish strong, focusing on making the best possible shot and ending on a high note.</button>
+    <button onclick="recordAnswer('P', 17, this)">You’re savoring the experience, soaking in the atmosphere and enjoying the satisfaction of a round well played, regardless of the final score.</button>
+</div>
+
+<div class="card" id="card-18">
+    <p>18. The round is over, and as you walk back to the clubhouse, you’re already thinking about your next golf trip. You’re planning a weekend getaway with friends to a renowned course. How do you approach organizing the trip?</p>
+    <button onclick="recordAnswer('J', 18, this)">You dive into the details, booking tee times, mapping out the itinerary, and ensuring everything is planned to maximize enjoyment.</button>
+    <button onclick="recordAnswer('P', 18, this)">You leave room for spontaneity, preferring to keep the schedule loose and embrace whatever opportunities come your way during the trip.</button>
+</div>
+
+<div class="card" id="card-19">
+    <p>19. After a successful round, you’re faced with one final decision. The course offers a unique, high-risk, high-reward shot challenge for those willing to take it on. The prize is enticing, but so is the potential cost. How do you decide whether to go for it?</p>
+    <button onclick="recordAnswer('S', 19, this)">You carefully weigh the pros and cons, considering all the tangible factors before making your decision. You prefer to make calculated risks, ensuring you’re prepared for any outcome.</button>
+    <button onclick="recordAnswer('N', 19, this)">You feel the excitement building and decide to trust your gut. When the moment feels right, you go for it, confident that your instincts will lead you to success.</button>
+</div>
+
+<div class="card" id="card-20">
+    <p>20. As the sun begins to set, casting long shadows across the course, you walk off the 18th green. The day has been filled with highs and lows, challenges, and triumphs. As you reflect on the round, what stands out most to you?</p>
+    <button onclick="recordAnswer('T', 20, this)">You think about your performance, analyzing your strengths and weaknesses. Each round is a step on your journey to becoming a better golfer.</button>
+    <button onclick="recordAnswer('F', 20, this)">You focus on the joy of the experience—the beauty of the course, the camaraderie, and the satisfaction of a day well spent.</button>
+</div>
+
+
+<!-- Add the remaining questions here following the same format -->
+
+<!-- Result card -->
+<div class="card" id="card-result" style="display: none;">
+    <p id="result">Your final result goes here...</p>
+    <button onclick="location.reload()">Restart Quiz</button>
+</div>
+
+<script>
+    const totalQuestions = 20;  // Update this number based on the total questions in the quiz
+    let currentQuestion = 1;
+    let counts = {
+        E: 0, I: 0,
+        S: 0, N: 0,
+        T: 0, F: 0,
+        J: 0, P: 0
+    };
+
+    function recordAnswer(type, questionNumber, clickedButton) {
+        counts[type]++;
+        hideOtherButton(clickedButton, questionNumber);
+    }
+
+
+    function hideOtherButton(clickedButton, questionNumber) {
+        const card = document.getElementById(`card-${questionNumber}`);
+        const buttons = card.querySelectorAll('button');
+        
+        // Hide all buttons except the clicked one
+        buttons.forEach(button => {
+            if (button !== clickedButton) {
+                button.style.visibility = 'hidden'; // Hide the other button
+            }
+        });
+
+        // Wait for a short duration before animating out the card
+        setTimeout(() => {
+            animateCardOut(questionNumber);
+        }, 50); // Adjust this delay if needed
+    }
+
+function animateCardOut(questionNumber) {
+        const currentCard = document.getElementById(`card-${questionNumber}`);
+        currentCard.classList.add('animate-out');
+        
+        // After the card slides out, show the next card
+        setTimeout(() => {
+            currentCard.classList.remove('active', 'animate-out');
+            if (questionNumber < totalQuestions) {
+                animateCardIn(questionNumber + 1);
+            } else {
+                showResultCard();
+            }
+        }, 200); // Match this duration with CSS transition duration
+    }
+
+    function animateCardIn(cardNumber) {
+        const nextCard = document.getElementById(`card-${cardNumber}`);
+        nextCard.classList.add('animate-in');
+        
+        // After positioning the next card off-screen, slide it in
+        setTimeout(() => {
+            nextCard.classList.remove('animate-in');
+            nextCard.classList.add('active');
+        }, 50); // Delay slightly to allow the card to start off-screen
+    }
+
+    function showResultCard() {
+        calculateMBTI()
+        const resultCard = document.getElementById('card-result');
+        
+        // Make sure the result card is positioned correctly and visible
+        resultCard.style.display = 'block';  // Ensure it's visible
+        resultCard.classList.add('active');  // Activate the result card
+
+        // Optionally, you can add a delay before displaying the result card for a smoother transition
+        setTimeout(() => {
+            resultCard.classList.add('active');
+        }, 200); // Adjust this duration if necessary
+    }
+
+    function showNextCard(cardNumber) {
+        document.getElementById(`card-${currentQuestion}`).classList.remove('active');
+        document.getElementById(`card-${cardNumber}`).classList.add('active');
+        currentQuestion = cardNumber;
+    }
+
+function calculateMBTI() {
+    let mbtiType = '';
+    mbtiType += counts.E >= counts.I ? 'E' : 'I';
+    mbtiType += counts.S >= counts.N ? 'S' : 'N';
+    mbtiType += counts.T >= counts.F ? 'T' : 'F';
+    mbtiType += counts.J >= counts.P ? 'J' : 'P';
+
+    // Call the function to get the brand and player profile
+    const resultString = getPersonalityForGolfBrand(mbtiType);
+
+    // Display the result in the result card
+    document.getElementById('result').innerText = resultString;
+
+    // Show the result card
+    showNextCard('result');
+}
+
+function getPersonalityForGolfBrand(personality) {
+    const brandPersonality = {
+        ENFJ: {
+            brand: "Titleist",
+            explanation: "Players who choose Titleist are driven by excellence and a desire to lead by example on the course. They are the ones who inspire others with their dedication to the game, even if they can't resist showing off their shiny new gear every chance they get."
+        },
+        ENFP: {
+            brand: "TaylorMade",
+            explanation: "TaylorMade buyers are enthusiastic and creative, always chasing the next big innovation. They enjoy trying new things, even if it means swapping clubs so often that they can’t seem to settle on what actually works."
+        },
+        ENTJ: {
+            brand: "Callaway",
+            explanation: "Callaway players are strategic and goal-oriented, relentlessly pursuing performance. They love dominating the game and everyone around them, even if their constant quest for the latest tech sometimes feels like overcompensation."
+        },
+        ENTP: {
+            brand: "Cobra",
+            explanation: "Cobra fans are bold and love pushing boundaries. They aren't afraid to stand out, even if it means taking risks that make them look more like a rebel without a cause than a skilled golfer."
+        },
+        ESFJ: {
+            brand: "Ping",
+            explanation: "Ping buyers are reliable and consistent, valuing tradition and community. They love to play it safe and stick to what they know, even if it means being seen as the boring player who never takes a chance."
+        },
+        ESFP: {
+            brand: "Nike Golf",
+            explanation: "Nike Golf enthusiasts are energetic and love to bring style to the game. They thrive in social settings and enjoy being the center of attention, even if their loud outfits sometimes outshine their actual golfing skills."
+        },
+        ESTJ: {
+            brand: "Cleveland Golf",
+            explanation: "Cleveland Golf buyers are practical and disciplined, preferring straightforward, high-performing equipment. They get the job done, but their no-nonsense approach can make them come off as a bit of a golf snob who forgot how to have fun."
+        },
+        ESTP: {
+            brand: "Wilson Staff",
+            explanation: "Wilson Staff players are action-oriented and thrive under pressure. They love making quick, decisive moves, even if those moves occasionally make them look more like impulsive risk-takers than calculated pros."
+        },
+        INFJ: {
+            brand: "Mizuno",
+            explanation: "Mizuno buyers are thoughtful and idealistic, drawn to craftsmanship and detail. They seek harmony in their game, even if their obsessive quest for the 'perfect shot' makes them come off as a bit of a dreamer lost in their own world."
+        },
+        INFP: {
+            brand: "Srixon",
+            explanation: "Srixon players value individuality and creativity. They enjoy expressing their unique style on the course, even if that means they sometimes seem more focused on being different than actually improving their game."
+        },
+        INTJ: {
+            brand: "Honma",
+            explanation: "Honma buyers are meticulous and strategic, always striving for perfection. They appreciate high-end craftsmanship, but their need for control can make them seem like they care more about their expensive clubs than the actual game."
+        },
+        INTP: {
+            brand: "PXG",
+            explanation: "PXG fans are analytical and innovative, constantly experimenting with their equipment. They love pushing the boundaries, even if that means their over-the-top obsession with the latest gear sometimes overshadows their performance."
+        },
+        ISFJ: {
+            brand: "FootJoy",
+            explanation: "FootJoy buyers are dependable and value tradition. They prioritize comfort and reliability, but their unwillingness to step out of their comfort zone can make them seem like they're stuck in the past."
+        },
+        ISFP: {
+            brand: "Adidas Golf",
+            explanation: "Adidas Golf enthusiasts are artistic and in tune with their surroundings. They prefer stylish, high-performing gear, even if their focus on looking good sometimes means they forget they're supposed to be playing golf, not walking a runway."
+        },
+        ISTJ: {
+            brand: "Ben Hogan",
+            explanation: "Ben Hogan buyers are practical and appreciate tradition. They value precision and consistency, but their rigid adherence to the old ways can make them seem like they're stuck in a bygone era of golf."
+        },
+        ISTP: {
+            brand: "Tour Edge",
+            explanation: "Tour Edge players are hands-on and adaptable. They value performance and efficiency, but their no-frills approach can sometimes make them seem like they care more about getting through the round quickly than enjoying the game."
+        }
+    };
+
+    const result = brandPersonality[personality.toUpperCase()];
+    if (result) {
+        return `Golf Brand: ${result.brand}\n \nPlayer Profile: ${result.explanation}`;
+    } else {
+        return "Invalid personality type. Please enter a valid personality type (e.g., ENFJ, ISTP).";
+    }
+}
+
+</script>
+
+</body>
+</html>
